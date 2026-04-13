@@ -1,1 +1,89 @@
+ORG 100h
+
+MAIN PROC
+    MAIN_LOOP:   
+      CALL GREEN_LIGHT
+      CALL CHECK_INPUT
+      
+      CALL YELLOW_LIGHT
+      CALL CHECK_INPUT
+      
+      CALL RED_LIGHT
+      
+    JMP MAIN_LOOP
+    
+    MAIN ENDP
+                    
+CHECK_INPUT PROC
+                        
+    MOV AH, 01h ;reading char from user  
+    INT 21h        
+      
+    CMP AL, 'E' ;emergency detected  
+    JE  EMERGENCY_MODE
+    CMP AL, 'e' ;emergency detected
+    JE  EMERGENCY_MODE
+      
+    CMP AL, 'P' ;pedestrian detected
+    JE  PEDESTRIAN_MODE   
+    CMP AL, 'p' ;pedestrian detected
+    JE  PEDESTRIAN_MODE                  
+    
+    RET  
+    CHECK_INPUT ENDP
+
+GREEN_LIGHT PROC  
+    MOV AL, 1  ;green
+    OUT 4, AL  
+    
+    MOV CX, 4000 ;t 
+    G_LOOP:
+     LOOP G_LOOP
+    
+    RET
+    GREEN_LIGHT ENDP
+
+YELLOW_LIGHT PROC 
+    MOV AL, 2  ;yellow
+    OUT 4, AL
+    
+    MOV CX, 2000 ;t/2
+    Y_LOOP:
+     LOOP Y_LOOP
+     
+    RET
+    YELLOW_LIGHT ENDP
+
+RED_LIGHT PROC
+    MOV AL, 4  ;red
+    OUT 4, AL
+    
+    MOV CX, 4000  ;t
+    R_LOOP:
+    LOOP R_LOOP
+                
+    RET            
+    RED_LIGHT ENDP  
+
+PEDESTRIAN_MODE PROC
+    MOV AL, 4  ;red
+    OUT 4, AL
+    
+    MOV CX, 12000  ;3t
+    P_LOOP:
+     LOOP P_LOOP
+    
+    RET
+    PEDESTRIAN_MODE ENDP
+
+EMERGENCY_MODE PROC
+    MOV AL, 4  ;red
+    OUT 4, AL
+    
+    MOV CX, 12000  ;3t
+    E_LOOP:
+     LOOP E_LOOP
+     
+    RET
+    EMERGENCY_MODE ENDP
 
