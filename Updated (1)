@@ -9,7 +9,7 @@ MAIN PROC
       CALL CHECK_INPUT
       
       CALL RED_LIGHT
-      CALL CHECK_INPUT ; Fix 4: check input during red phase too
+      CALL CHECK_INPUT 
       
     JMP MAIN_LOOP
     
