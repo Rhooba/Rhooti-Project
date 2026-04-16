@@ -20,5 +20,4 @@ AH=0Bh — checks if a key is waiting (returns FFh = yes, 00h = no)
 AH=01h — reads the key only if one is available
 
 
-Procedures
-ProcedureDescriptionMAINEntry point, runs the main cycle loopGREEN_LIGHTActivates green light with timed delayYELLOW_LIGHTActivates yellow light with timed delayRED_LIGHTActivates red light with timed delayCHECK_INPUTNon-blocking keyboard check, routes to correct modePEDESTRIAN_MODEHolds Red for pedestrian crossingEMERGENCY_MODEForces immediate Red for emergency vehicle
+
