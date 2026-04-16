@@ -1,7 +1,7 @@
 ORG 100h
 
 MAIN PROC
-    MAIN_LOOP:   
+ MAIN_LOOP:   
       CALL GREEN_LIGHT
       CALL CHECK_INPUT
       
@@ -9,16 +9,29 @@ MAIN PROC
       CALL CHECK_INPUT
       
       CALL RED_LIGHT
+      CALL CHECK_INPUT ; Fix 4: check input during red phase too
       
     JMP MAIN_LOOP
     
-    MAIN ENDP
-                    
+MAIN ENDP
+
+;----Check Input----
 CHECK_INPUT PROC
+;Fix 1: non-blocking keyboard check
+;Use AH 08h to ask if key is waiting in buffer without blocking
+;Only readings the key AH 01h if one is actually there.
+;If no key is waiting immediately returns to loops
+;Timing loops are never frozen
                         
-    MOV AH, 01h ;reading char from user  
-    INT 21h        
+    MOV AH, 08h ;Service 08h checks keyboard status(non-blocking) per instructions  
+    INT 21h     ; AL = FFh if key is ready, 00h if not   
       
+    CMP AL, 0FFh ;key waiting in buffer? yes. 
+    JNE NO_Key ; no key skip to return
+
+    MOV AH, 01h ; Service 01h read key
+    INT 21h ; 
+    
     CMP AL, 'E' ;emergency detected  
     JE  EMERGENCY_MODE
     CMP AL, 'e' ;emergency detected
@@ -28,23 +41,28 @@ CHECK_INPUT PROC
     JE  PEDESTRIAN_MODE   
     CMP AL, 'p' ;pedestrian detected
     JE  PEDESTRIAN_MODE                  
-    
+
+NO_KEY:
     RET  
-    CHECK_INPUT ENDP
+CHECK_INPUT ENDP
+
+;----Green Light----
+;Fix 2: Green is 4 (bit 2)
 
 GREEN_LIGHT PROC  
-    MOV AL, 1  ;green
+    MOV AL, 4  ;green (bit 2)
     OUT 4, AL  
     
     MOV CX, 4000 ;t 
     G_LOOP:
-     LOOP G_LOOP
+        LOOP G_LOOP
     
     RET
-    GREEN_LIGHT ENDP
+GREEN_LIGHT ENDP
 
+;----Yellow Light----
 YELLOW_LIGHT PROC 
-    MOV AL, 2  ;yellow
+    MOV AL, 2  ;yellow (bit 1)
     OUT 4, AL
     
     MOV CX, 2000 ;t/2
@@ -52,38 +70,53 @@ YELLOW_LIGHT PROC
      LOOP Y_LOOP
      
     RET
-    YELLOW_LIGHT ENDP
+YELLOW_LIGHT ENDP
+
+;-----Red Light------
+;Fix 3: Red is one. 
 
 RED_LIGHT PROC
-    MOV AL, 4  ;red
+    MOV AL, 1  ; red light (bit 0)
     OUT 4, AL
     
     MOV CX, 4000  ;t
     R_LOOP:
-    LOOP R_LOOP
+        LOOP R_LOOP
                 
     RET            
-    RED_LIGHT ENDP  
+RED_LIGHT ENDP  
+
+;----Pedestrian----
+;Fix 4: Pedestrian = schedule red extended
+;Called when 'P' pressed. Holds red for 3x normal
 
 PEDESTRIAN_MODE PROC
-    MOV AL, 4  ;red
+    MOV AL, 1  ;red light (bit 0)
     OUT 4, AL
     
-    MOV CX, 12000  ;3t
+    MOV CX, 12000  ;3t- extended hold for crossing
     P_LOOP:
      LOOP P_LOOP
     
     RET
-    PEDESTRIAN_MODE ENDP
+PEDESTRIAN_MODE ENDP
+
+;----Emergency----
+;Fix 5: Emergancy is immediate red override
+;Unlike pedestrian (which waits for a scheduled red
+;Emergency forces red light now regardless of current light
+;Holds for 3x duration to let emergency vehicle pass
+;After which normal light cycle returns
 
 EMERGENCY_MODE PROC
-    MOV AL, 4  ;red
+    MOV AL, 1  ;red light (bit 0)
     OUT 4, AL
     
-    MOV CX, 12000  ;3t
-    E_LOOP:
-     LOOP E_LOOP
+    MOV CX, 2000  ; Longer hold than pedestrian
+     E_LOOP:
+        LOOP E_LOOP
      
     RET
-    EMERGENCY_MODE ENDP
+EMERGENCY_MODE ENDP
+
 
