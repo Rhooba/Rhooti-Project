@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="887" dy="1874" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="794" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -136,7 +136,7 @@
         <mxCell id="WQwIxaHQrizEAoPMNwXK-36" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Yes" vertex="1">
           <mxGeometry height="30" width="60" x="605" y="572.5" as="geometry" />
         </mxCell>
-        <mxCell id="WQwIxaHQrizEAoPMNwXK-37" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="EMERGENCY_MODE:&lt;div&gt;MOV AL, 1 (override)&lt;/div&gt;&lt;div&gt;OUT 4, AL&lt;/div&gt;&lt;div&gt;CX = 2000 LOOP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="WQwIxaHQrizEAoPMNwXK-37" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="EMERGENCY_MODE:&lt;div&gt;MOV AL, 1 (override)&lt;/div&gt;&lt;div&gt;OUT 4, AL&lt;/div&gt;&lt;div&gt;CX = 5000 LOOP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="165.15" x="598.75" y="710" as="geometry" />
         </mxCell>
         <mxCell id="WQwIxaHQrizEAoPMNwXK-39" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="endArrow=classic;html=1;rounded=0;curved=1;" target="WQwIxaHQrizEAoPMNwXK-27" value="">
@@ -184,7 +184,7 @@
         <mxCell id="WQwIxaHQrizEAoPMNwXK-56" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WQwIxaHQrizEAoPMNwXK-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="WQwIxaHQrizEAoPMNwXK-27" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="WQwIxaHQrizEAoPMNwXK-53" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="PEDESTRIAN_MODE:&lt;div&gt;MOV AL, 1 (extended red)&lt;/div&gt;&lt;div&gt;OUT 4, AL&lt;/div&gt;&lt;div&gt;CX = 12000 LOOP&lt;/div&gt;" vertex="1">
+        <mxCell id="WQwIxaHQrizEAoPMNwXK-53" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="PEDESTRIAN_MODE:&lt;div&gt;MOV AL, 1 (extended red)&lt;/div&gt;&lt;div&gt;OUT 4, AL&lt;/div&gt;&lt;div&gt;CX = 5000 LOOP&lt;/div&gt;" vertex="1">
           <mxGeometry height="70" width="165.15" x="797.27" y="710" as="geometry" />
         </mxCell>
       </root>
