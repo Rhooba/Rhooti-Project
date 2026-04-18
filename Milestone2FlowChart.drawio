@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="718" dy="1739" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="656" dy="1690" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -13,7 +13,7 @@
         <mxCell id="v-Ts9ymSa76R8XvdeFOa-14" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="v-Ts9ymSa76R8XvdeFOa-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="v-Ts9ymSa76R8XvdeFOa-1" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="v-Ts9ymSa76R8XvdeFOa-0" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="GREEN_LIGHT PROC&lt;div&gt;MOV AL, 4&lt;/div&gt;&lt;div&gt;OUT AL, 4&lt;/div&gt;&lt;div&gt;CX = 4000 Loop&lt;/div&gt;" vertex="1">
+        <mxCell id="v-Ts9ymSa76R8XvdeFOa-0" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="GREEN_LIGHT PROC&lt;div&gt;MOV AL, 4&lt;/div&gt;&lt;div&gt;OUT 4, AL&lt;/div&gt;&lt;div&gt;CX = 500 Loop&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="140" x="150" y="170" as="geometry" />
         </mxCell>
         <mxCell id="v-Ts9ymSa76R8XvdeFOa-18" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="v-Ts9ymSa76R8XvdeFOa-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="v-Ts9ymSa76R8XvdeFOa-2" value="">
