@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="718" dy="1739" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="887" dy="1874" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -37,7 +37,7 @@
         <mxCell id="v-Ts9ymSa76R8XvdeFOa-17" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="v-Ts9ymSa76R8XvdeFOa-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="v-Ts9ymSa76R8XvdeFOa-16" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="v-Ts9ymSa76R8XvdeFOa-9" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="RED_LIGHT PROC&lt;div&gt;MOV AL, 1&lt;/div&gt;&lt;div&gt;OUT AL, 4&lt;/div&gt;&lt;div&gt;CX = 4000 Loop&lt;/div&gt;" vertex="1">
+        <mxCell id="v-Ts9ymSa76R8XvdeFOa-9" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="RED_LIGHT PROC&lt;div&gt;MOV AL, 1&lt;/div&gt;&lt;div&gt;OUT AL, 4&lt;/div&gt;&lt;div&gt;CX = 500 Loop&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="160" y="600" as="geometry" />
         </mxCell>
         <mxCell id="v-Ts9ymSa76R8XvdeFOa-16" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;whiteSpace=wrap;html=1;" value="CALL&lt;div&gt;CHECK_INPUT&lt;/div&gt;" vertex="1">
