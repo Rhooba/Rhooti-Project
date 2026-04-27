@@ -1,3 +1,7 @@
+;Now make it for all lights
+;NS EW systems
+;Use Stack 
+
 ORG 100h
 
 MAIN PROC
@@ -52,9 +56,9 @@ CHECK_INPUT ENDP
 
 ;----Green Light----
 GREEN_LIGHT PROC  
-    MOV AL, 4  ;green (bit 2)
+    MOV AL, 4  ;green (bit 2) 
     OUT 4, AL  
-    
+  
     MOV CX, 500 ;t 
     G_LOOP:       
 ;Fix 4: added this CALL button to check for inout ALL THE TIME       
@@ -66,8 +70,8 @@ GREEN_LIGHT ENDP
 
 ;----Yellow Light----
 YELLOW_LIGHT PROC 
-    MOV AL, 2  ;yellow (bit 1)
-    OUT 4, AL
+    MOV AL, 2  ;yellow (bit 1)  
+    OUT 4, AL                  
     
     MOV CX, 250 ;t/2
     Y_LOOP:
@@ -121,4 +125,13 @@ EMERGENCY_MODE PROC
     RET
 EMERGENCY_MODE ENDP    
 
-;Fix 7: the times in all lights
+;Fix 7: the times in all lights       
+
+
+;MOV AL, 8 read east
+;MOV AL, 16 yellow east
+;MOV AL, 32 green east     
+
+;MOV AL, 64 red north
+;MOV AL, 128 yellow north
+;MOV AL, 256 green north
