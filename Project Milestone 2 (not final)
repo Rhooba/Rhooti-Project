@@ -134,4 +134,4 @@ EMERGENCY_MODE ENDP
 
 ;MOV AL, 64 red north
 ;MOV AL, 128 yellow north
-;MOV AL, 256 green north
+;MOV AL, 256 green north (this is the one that does NOT work)
