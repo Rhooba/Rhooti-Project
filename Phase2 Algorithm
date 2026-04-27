@@ -33,7 +33,9 @@ Smart Traffic Light Controller — Phase 2 Algorithm
 
 EMERGENCY : 
 Override procedure: Output ALL RED to port 4 immediately. 
-Hold for the emergency duration (longer than normal). Return to the main loop at the start of the NS phase.
+Hold for the emergency duration (longer than normal). 
+Return to the main loop at the start of the NS phase.
 
 PEDESTRIAN:
-Procedure: Output ALL RED to port 4. Hold for the extended crossing duration. Return to the main loop.
+Procedure: Output ALL RED to port 4. Hold for the extended crossing duration. 
+Return to the main loop.
