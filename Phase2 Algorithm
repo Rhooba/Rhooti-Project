@@ -1,0 +1,32 @@
+(WORK IN PROGRESS)
+
+Smart Traffic Light Controller — Phase 2 Algorithm
+
+1. Start the program and initialize the system (set port 4 to ALL RED as a safe starting state).
+
+2. Enter the main loop, which runs forever:
+
+a. Check for keyboard input (non-blocking):
+  1. If 'E' or 'e' is pressed → jump immediately to Emergency Override.
+  2. If 'P' or 'p' is pressed → set a pedestrian flag; handle after the current phase ends safely.
+  3. If no key → continue.
+
+b. Run NS Phase:
+  1. Output NS Green + EW Red to port 4. Hold for the green duration.
+  2. Check for input.
+  3. Output NS Yellow + EW Red to port 4. Hold for the yellow duration.
+  4. Check for input.
+  5. Output NS Red + EW Red (ALL RED) briefly to port 4. This is the safe transition gap.
+
+c. Check pedestrian flag: if set, hold ALL RED for the extended crossing duration, then clear the flag.
+
+d. Run EW Phase:
+  1. Output NS Red + EW Green to port 4. Hold for the green duration.
+  2. Check for input.
+  3. Output NS Red + EW Yellow to port 4. Hold for the yellow duration.
+  4. Check for input.
+  5. Output ALL RED briefly. Safe transition gap.
+
+e. Check pedestrian flag: if set, hold ALL RED for extended duration, then clear flag.
+
+f. Return to step 2.
