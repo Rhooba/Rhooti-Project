@@ -30,3 +30,10 @@ d. Run EW Phase:
 e. Check pedestrian flag: if set, hold ALL RED for extended duration, then clear flag.
 
 f. Return to step 2.
+
+EMERGENCY : 
+Override procedure: Output ALL RED to port 4 immediately. 
+Hold for the emergency duration (longer than normal). Return to the main loop at the start of the NS phase.
+
+PEDESTRIAN:
+Procedure: Output ALL RED to port 4. Hold for the extended crossing duration. Return to the main loop.
