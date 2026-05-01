@@ -1,28 +1,27 @@
-(WORK IN PROGRESS)
-
 Smart Traffic Light Controller — Phase 2 Algorithm
-
+CS 240 | Dr. Dube | Cuesta College | Group: Rhooti
 1. Start program.
-
-2. Initialize system — set all lights to RED.
-
+2. Initialize system.
+  - Set all lights to RED.
+  - Clear all flags.
 3. Repeat forever:
-- Check for keyboard input.
-  1. If emergency key is pressed, go to step 7 immediately.
-  2. If pedestrian key is pressed, set pedestrian flag and continue.
-  3. Run North-South green phase — hold for full green duration.
-  4. Run North-South yellow phase — hold for yellow duration.
-  5. Transition to ALL RED — if pedestrian flag is set, extend hold for crossing, then clear flag.
-  6. Run East-West green phase — hold for full green duration.
-  7. Run East-West yellow phase — hold for yellow duration.
-  8. Transition to ALL RED — if pedestrian flag is set, extend hold for crossing, then clear flag.
-  9. Return to top of loop.
-
-
-4. Pedestrian procedure: Hold all lights RED for extended duration.
-  - Clear flag. 
+  - Continuously check for keyboard input throughout each phase.
+  - If emergency key is pressed, go to Step 5 immediately.
+  - If pedestrian key is pressed, set pedestrian flag and continue.
+  - Run North-South green phase — hold for full green duration.
+  - Run North-South yellow phase — hold for yellow duration.
+  - Transition to ALL RED.
+  - If pedestrian flag is set, extend hold for crossing, then clear flag.
+  - Run East-West green phase — hold for full green duration.
+  - Run East-West yellow phase — hold for yellow duration.
+  - Transition to ALL RED.
+  - If pedestrian flag is set, extend hold for crossing, then clear flag.
+  - Return to top of loop.
+4. Pedestrian procedure:
+  - Hold all lights RED for extended crossing duration.
+  - Clear pedestrian flag.
   - Return.
-
-5. Emergency procedure: Force all lights to RED immediately. 
-  - Hold for emergency duration. 
-  - Return to start of normal cycle.
+5. Emergency procedure:
+  - Force all lights to RED immediately.
+  - Hold for emergency duration to allow vehicle to pass.
+  - Return to top of main loop.
