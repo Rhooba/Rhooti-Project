@@ -1,9 +1,11 @@
 Smart Traffic Light Controller — Phase 2 Algorithm
 CS 240 | Dr. Dube | Cuesta College | Group: Rhooti
 1. Start program.
+
 2. Initialize system.
   - Set all lights to RED.
   - Clear all flags.
+
 3. Repeat forever:
   - Continuously check for keyboard input throughout each phase.
   - If emergency key is pressed, go to Step 5 immediately.
@@ -17,10 +19,12 @@ CS 240 | Dr. Dube | Cuesta College | Group: Rhooti
   - Transition to ALL RED.
   - If pedestrian flag is set, extend hold for crossing, then clear flag.
   - Return to top of loop.
+
 4. Pedestrian procedure:
   - Hold all lights RED for extended crossing duration.
   - Clear pedestrian flag.
   - Return.
+
 5. Emergency procedure:
   - Force all lights to RED immediately.
   - Hold for emergency duration to allow vehicle to pass.
