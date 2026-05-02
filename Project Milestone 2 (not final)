@@ -4,40 +4,48 @@
 
 ORG 100h
 
+;In this code, DX is like an integer to hold state number
+
 MAIN PROC
  MAIN_LOOP: 
    ;state 1 NS Green & EW Red
    STATE_1:  
+      MOV DX,1
       CALL NS_GREEN_LIGHT
       CALL CHECK_INPUT 
       JMP STATE_2
    
    ;state 2 NS Yellow & EW Red     
-   STATE_2:    
+   STATE_2:
+      MOV DX, 2 
       CALL NS_YELLOW_LIGHT
       CALL CHECK_INPUT
       JMP STATE_3
    
    ;state 3 all Red for a bit
-   STATE_3:   
+   STATE_3:
+      MOV DX, 3
       CALL ALL_RED_LIGHT
       CALL CHECK_INPUT
       JMP STATE_4   
       
    ;state 4 NS Red & EW Green
-   STATE_4: 
+   STATE_4:
+      MOV DX, 4
       CALL NS_RED_LIGHT
       CALL CHECK_INPUT
       JMP STATE_5   
       
    ;state 5 NS Red & EW Yellow
-   STATE_5:
+   STATE_5: 
+      MOV DX, 5
       CALL EW_YELLOW_LIGHT
       CALL CHECK_INPUT
       JMP STATE_6 
       
    ;state 6 all Red for a bit
    STATE_6:
+      MOV DX, 6
       CALL ALL_RED_LIGHT
       CALL CHECK_INPUT
       JMP STATE_1
@@ -67,12 +75,31 @@ CHECK_INPUT PROC
     JMP NO_KEY  
                  
 EMERGENCY:
-    CALL EMERGENCY_MODE
-    JMP MAIN_LOOP
+    PUSH DX  ;save data
+    CALL EMERGENCY_MODE 
+    POP DX   ;restore data
+    JMP RETURN
     
-PEDESTRIAN:
-    CALL PEDESTRIAN_MODE
-    JMP MAIN_LOOP 
+PEDESTRIAN: 
+    PUSH DX  ;save data
+    CALL PEDESTRIAN_MODE 
+    POP DX   ;restore data
+    JMP RETURN   
+    
+RETURN:
+    CMP DX, 1
+    JE STATE_1
+    CMP DX, 2
+    JE STATE_2
+    CMP DX, 3
+    JE STATE_3
+    CMP DX, 4
+    JE STATE_4
+    CMP DX, 5
+    JE STATE_5
+    CMP DX, 6
+    JE STATE_6
+    JMP MAIN_LOOP
 
 NO_KEY:
     RET  
@@ -167,4 +194,4 @@ EMERGENCY_MODE PROC
         LOOP E_LOOP
      
     RET
-EMERGENCY_MODE ENDP   
+EMERGENCY_MODE ENDP    
