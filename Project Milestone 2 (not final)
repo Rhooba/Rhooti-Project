@@ -5,15 +5,42 @@
 ORG 100h
 
 MAIN PROC
- MAIN_LOOP:   
-      CALL GREEN_LIGHT
-      CALL CHECK_INPUT
-      
-      CALL YELLOW_LIGHT
-      CALL CHECK_INPUT
-      
-      CALL RED_LIGHT
+ MAIN_LOOP: 
+   ;state 1 NS Green & EW Red
+   STATE_1:  
+      CALL NS_GREEN_LIGHT
       CALL CHECK_INPUT 
+      JMP STATE_2
+   
+   ;state 2 NS Yellow & EW Red     
+   STATE_2:    
+      CALL NS_YELLOW_LIGHT
+      CALL CHECK_INPUT
+      JMP STATE_3
+   
+   ;state 3 all Red for a bit
+   STATE_3:   
+      CALL ALL_RED_LIGHT
+      CALL CHECK_INPUT
+      JMP STATE_4   
+      
+   ;state 4 NS Red & EW Green
+   STATE_4: 
+      CALL NS_RED_LIGHT
+      CALL CHECK_INPUT
+      JMP STATE_5   
+      
+   ;state 5 NS Red & EW Yellow
+   STATE_5:
+      CALL EW_YELLOW_LIGHT
+      CALL CHECK_INPUT
+      JMP STATE_6 
+      
+   ;state 6 all Red for a bit
+   STATE_6:
+      CALL ALL_RED_LIGHT
+      CALL CHECK_INPUT
+      JMP STATE_1
       
     JMP MAIN_LOOP
     
@@ -21,7 +48,6 @@ MAIN ENDP
 
 ;----Check Input----
 CHECK_INPUT PROC
-;Fix 1: changed the way to get input
    
     MOV AH, 06h 
     MOV DL, 0FFh
@@ -38,10 +64,8 @@ CHECK_INPUT PROC
     CMP AL, 'p' ;pedestrian detected
     JE  PEDESTRIAN   
 
-;Fix 2: this line    
     JMP NO_KEY  
-               
-;Fix 3: created labels tha call the procedures    
+                 
 EMERGENCY:
     CALL EMERGENCY_MODE
     JMP MAIN_LOOP
@@ -54,59 +78,79 @@ NO_KEY:
     RET  
 CHECK_INPUT ENDP
 
-;----Green Light----
-GREEN_LIGHT PROC  
-    MOV AL, 4  ;green (bit 2) 
-    OUT 4, AL  
+;---- North South Green Light & East West Red Light---- 
+NS_GREEN_LIGHT PROC 
+    MOV AX, 30Ch
+    OUT 4, AX
   
-    MOV CX, 500 ;t 
-    G_LOOP:       
-;Fix 4: added this CALL button to check for inout ALL THE TIME       
+    MOV CX, 100 ;t 
+    NSG_LOOP:           
       CALL CHECK_INPUT
-      LOOP G_LOOP
+      LOOP NSG_LOOP
     
     RET
-GREEN_LIGHT ENDP
+NS_GREEN_LIGHT ENDP
 
-;----Yellow Light----
-YELLOW_LIGHT PROC 
-    MOV AL, 2  ;yellow (bit 1)  
-    OUT 4, AL                  
+;----North South Yellow Light & East West Red Light----
+NS_YELLOW_LIGHT PROC 
+    MOV AX, 28Ah
+    OUT 4, AX                 
     
-    MOV CX, 250 ;t/2
-    Y_LOOP:
-;Fix 5: added this CALL button to check for inout ALL THE TIME           
+    MOV CX, 50 ;t/2
+    NSY_LOOP:         
       CALL CHECK_INPUT
-      LOOP Y_LOOP
+      LOOP NSY_LOOP
      
     RET
-YELLOW_LIGHT ENDP
+NS_YELLOW_LIGHT ENDP 
 
-;-----Red Light------
-;Fix 3: Red is one. 
-
-RED_LIGHT PROC
-    MOV AL, 1  ; red light (bit 0)
-    OUT 4, AL
+;----North South Red Light & East West Red Light----
+ALL_RED_LIGHT PROC
+    MOV AX, 249h 
+    OUT 4, AX
     
-    MOV CX, 500  ;t
-    R_LOOP:          
-;Fix 6: added this CALL button to check for inout ALL THE TIME      
+    MOV CX, 25 ;t/4
+    RED_LOOP: 
+    CALL CHECK_INPUT        
+      LOOP RED_LOOP  
+      
+    RET
+ALL_RED_LIGHT ENDP      
+
+;-----North South Red & East West Green Light------
+NS_RED_LIGHT PROC              
+    MOV AX, 861h 
+    OUT 4, AX
+    
+    MOV CX, 100  ;t
+    NSR_LOOP:               
       CALL CHECK_INPUT
-      LOOP R_LOOP
+      LOOP NSR_LOOP
                 
     RET            
-RED_LIGHT ENDP  
+NS_RED_LIGHT ENDP
+
+;----North South Red & East West Yellow Light----
+EW_YELLOW_LIGHT PROC 
+    MOV AX, 451h
+    OUT 4, AX                 
+    
+    MOV CX, 50 ;t/2
+    EWY_LOOP:         
+      CALL CHECK_INPUT
+      LOOP EWY_LOOP
+     
+    RET
+EW_YELLOW_LIGHT ENDP
+
 
 ;----Pedestrian----
-;Fix 4: Pedestrian = schedule red extended
-;Called when 'P' pressed. Holds red for 3x normal
 
 PEDESTRIAN_MODE PROC
-    MOV AL, 1  ;red light (bit 0)
-    OUT 4, AL
+    MOV AX, 249h 
+    OUT 4, AX
     
-    MOV CX, 5000 ;10t extended hold for crossing
+    MOV CX, 1000 ;10t extended hold for crossing
     P_LOOP:         
       LOOP P_LOOP
     
@@ -115,23 +159,12 @@ PEDESTRIAN_MODE ENDP
 
 ;----Emergency----
 EMERGENCY_MODE PROC
-    MOV AL, 1  ;red light (bit 0)
-    OUT 4, AL
+    MOV AX, 249h  
+    OUT 4, AX
     
-    MOV CX, 5000  ;10t extended hold for vehicle crossing safely
+    MOV CX, 1000 ;10t extended hold for vehicle crossing safely
      E_LOOP:
         LOOP E_LOOP
      
     RET
-EMERGENCY_MODE ENDP    
-
-;Fix 7: the times in all lights       
-
-
-;MOV AL, 8 read east
-;MOV AL, 16 yellow east
-;MOV AL, 32 green east     
-
-;MOV AL, 64 red north
-;MOV AL, 128 yellow north
-;MOV AL, 256 green north (this is the one that does NOT work)
+EMERGENCY_MODE ENDP   
