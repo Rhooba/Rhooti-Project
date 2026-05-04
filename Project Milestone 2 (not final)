@@ -4,7 +4,8 @@
 
 ORG 100h
 
-;In this code, DX is like an integer to hold state number
+;In this code, DX is like an integer to hold state number 
+PED_REQ DB 0  ;pedestrian flag 
 
 MAIN PROC
  MAIN_LOOP: 
@@ -81,10 +82,8 @@ EMERGENCY:
     JMP RETURN
     
 PEDESTRIAN: 
-    PUSH DX  ;save data
-    CALL PEDESTRIAN_MODE 
-    POP DX   ;restore data
-    JMP RETURN   
+    MOV PED_REQ, 1
+    RET   
     
 RETURN:
     CMP DX, 1
@@ -139,9 +138,21 @@ ALL_RED_LIGHT PROC
     MOV CX, 25 ;t/4
     RED_LOOP: 
     CALL CHECK_INPUT        
-      LOOP RED_LOOP  
+      LOOP RED_LOOP 
       
-    RET
+    ;checking if pedestrian request:
+    CMP PED_REQ, 1
+    JNE NO_PED     
+    
+    MOV PED_REQ, 0  ;clearing the request
+    
+    MOV CX, 1000 ;extend red time for pedestrians
+    PED_EXTEND:
+      LOOP PED_EXTEND
+      
+    NO_PED:
+      RET
+      
 ALL_RED_LIGHT ENDP      
 
 ;-----North South Red & East West Green Light------
@@ -194,4 +205,4 @@ EMERGENCY_MODE PROC
         LOOP E_LOOP
      
     RET
-EMERGENCY_MODE ENDP    
+EMERGENCY_MODE ENDP
