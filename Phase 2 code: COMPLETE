@@ -1,17 +1,16 @@
-;Now make it for all lights
-;NS EW systems
-;Use Stack 
+;Traffic Light Controller using EMU8086
+;Rhooti: Nour Makhoul, Whitney Hollman, Ignacio Mora
 
 ORG 100h
 
 ;In this code, DX is like an integer to hold state number 
-PED_REQ DB 0  ;pedestrian flag 
+PED_REQ DB 0  ;pedestrian request flag (0 = no request, 1 = request)
 
 MAIN PROC
  MAIN_LOOP: 
    ;state 1 NS Green & EW Red
    STATE_1:  
-      MOV DX,1
+      MOV DX, 1  ;storing current state number
       CALL NS_GREEN_LIGHT
       CALL CHECK_INPUT 
       JMP STATE_2
@@ -23,7 +22,8 @@ MAIN PROC
       CALL CHECK_INPUT
       JMP STATE_3
    
-   ;state 3 all Red for a bit
+   ;state 3 all Red for a safe transition
+   ;pedestrian request is honored here
    STATE_3:
       MOV DX, 3
       CALL ALL_RED_LIGHT
@@ -44,7 +44,8 @@ MAIN PROC
       CALL CHECK_INPUT
       JMP STATE_6 
       
-   ;state 6 all Red for a bit
+   ;state 6 all Red for a safe transition
+   ;pedestrian request is honored here
    STATE_6:
       MOV DX, 6
       CALL ALL_RED_LIGHT
@@ -56,35 +57,41 @@ MAIN PROC
 MAIN ENDP
 
 ;----Check Input----
+;non blocking keyboard read for emergency and pedestrian
 CHECK_INPUT PROC
    
     MOV AH, 06h 
     MOV DL, 0FFh
     INT 21h
     JZ NO_KEY
-    
+
+    ;emergency input, immediate interrupt
     CMP AL, 'E' ;emergency detected  
     JE  EMERGENCY
     CMP AL, 'e' ;emergency detected
     JE  EMERGENCY
-      
+
+    ;pedestrian input, waits for a safe moment
     CMP AL, 'P' ;pedestrian detected
     JE  PEDESTRIAN 
     CMP AL, 'p' ;pedestrian detected
     JE  PEDESTRIAN   
 
     JMP NO_KEY  
-                 
+
+;using stacks in emergency to save/restore state
 EMERGENCY:
-    PUSH DX  ;save data
+    PUSH DX  ;save state number
     CALL EMERGENCY_MODE 
-    POP DX   ;restore data
-    JMP RETURN
-    
+    POP DX   ;restore state number
+    JMP RETURN   ;jump back to correct state
+
+;waits for next safe all-red phase
 PEDESTRIAN: 
-    MOV PED_REQ, 1
+    MOV PED_REQ, 1  ;set pedestrian flag
     RET   
-    
+
+;return to correct state after emergency
 RETURN:
     CMP DX, 1
     JE STATE_1
@@ -183,7 +190,6 @@ EW_YELLOW_LIGHT ENDP
 
 
 ;----Pedestrian----
-
 PEDESTRIAN_MODE PROC
     MOV AX, 249h 
     OUT 4, AX
