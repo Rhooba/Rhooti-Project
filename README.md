@@ -1,4 +1,4 @@
-# Rhooti Smart Traffic Light Controller
+# Micro Architecture Smart Traffic Light Controller
 
 **CS 240 | Micro Architecture & Assembly Language | Cuesta College | Dr. Dube**  
 `8086 Assembly` `EMU8086` `Virtual Device` `Collaborative Project`
